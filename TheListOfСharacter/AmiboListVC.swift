@@ -12,11 +12,15 @@ class AmiboListVC: UIViewController {
     let tableView = UITableView ()
     var safeArea: UILayoutGuide!
     
+    let AmiboList = ["Zenaida", "Sobaka", "sherst", "govno", "pidr"]
+    
     override func viewDidLoad() {
         view.backgroundColor = .white
         safeArea = view.layoutMarginsGuide
         
         tableView.dataSource = self
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         
         setupView ()
     }
@@ -41,12 +45,15 @@ class AmiboListVC: UIViewController {
 extension AmiboListVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return AmiboList.count
     }
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = UITableViewCell ()
-        cell.textLabel?.text = "Hey! listen!"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        
+        let name = AmiboList[indexPath.row]
+        
+        cell.textLabel?.text = name
         return cell
     }
 
